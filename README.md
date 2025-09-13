@@ -4,7 +4,9 @@
 
 
 ### 디자인 패턴 활용
-* [UI 구조 (MVP, 옵저버 패턴)](https://github.com/ladius3565/Portfolio/blob/main/%EB%94%94%EC%9E%90%EC%9D%B8%20%ED%8C%A8%ED%84%B4%20%ED%99%9C%EC%9A%A9/README.md)
+* [UI 구조 (MVP, 옵저버 패턴)](https://github.com/ladius3565/Portfolio/blob/main/%EB%94%94%EC%9E%90%EC%9D%B8%20%ED%8C%A8%ED%84%B4%20%ED%99%9C%EC%9A%A9/UI%20%EA%B5%AC%EC%A1%B0/README.md)
+  
+* [플레이어 구조 (FSM 패턴)](https://github.com/ladius3565/Portfolio/blob/main/%EB%94%94%EC%9E%90%EC%9D%B8%20%ED%8C%A8%ED%84%B4%20%ED%99%9C%EC%9A%A9/UI%20%EA%B5%AC%EC%A1%B0/README.md)
 
 
 ### 공통 기능 구현
