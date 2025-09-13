@@ -1,6 +1,6 @@
 # 개요
 
-이전에 작업했던 코드들 중 일부를 가져와 주석을 추가한 코드들 입니다.
+이전에 작업했던 코드들 중 일부를 가져와 주석 추가한 코드들 입니다.
 
 
 ### 디자인 패턴 활용(MVP, 옵저버)
@@ -11,3 +11,5 @@
 * [무한 스크롤](https://github.com/ladius3565/Portfolio/blob/main/%EA%B3%B5%ED%86%B5%20%EA%B8%B0%EB%8A%A5%20%EA%B5%AC%ED%98%84/InfiniteScroll.md)
 
 * [커스텀 메뉴](https://github.com/ladius3565/Portfolio/blob/main/%EA%B3%B5%ED%86%B5%20%EA%B8%B0%EB%8A%A5%20%EA%B5%AC%ED%98%84/CustomMenu.md)
+
+* []()
