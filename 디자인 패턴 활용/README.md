@@ -20,4 +20,5 @@
 
 
 ![MVP 예시](https://github.com/ladius3565/Portfolio/blob/main/%EB%94%94%EC%9E%90%EC%9D%B8%20%ED%8C%A8%ED%84%B4%20%ED%99%9C%EC%9A%A9/Image/MVPPattern_EX.png)
+
 최종적으로 위의 이미지와 같은 구조로 개별 UI가 구현되게 됩니다.
