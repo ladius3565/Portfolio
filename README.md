@@ -10,8 +10,8 @@
 
 
 ### 공통 기능 구현
-* [무한 스크롤](https://github.com/ladius3565/Portfolio/blob/main/%EA%B3%B5%ED%86%B5%20%EA%B8%B0%EB%8A%A5%20%EA%B5%AC%ED%98%84/InfiniteScroll.md)
+* [무한 스크롤](https://github.com/ladius3565/Portfolio/blob/main/%EA%B3%B5%ED%86%B5%20%EA%B8%B0%EB%8A%A5%20%EA%B5%AC%ED%98%84/%EB%AC%B4%ED%95%9C%20%EC%8A%A4%ED%81%AC%EB%A1%A4/README.md)
 
-* [커스텀 메뉴](https://github.com/ladius3565/Portfolio/blob/main/%EA%B3%B5%ED%86%B5%20%EA%B8%B0%EB%8A%A5%20%EA%B5%AC%ED%98%84/CustomMenu.md)
+* [커스텀 메뉴](https://github.com/ladius3565/Portfolio/blob/main/%EA%B3%B5%ED%86%B5%20%EA%B8%B0%EB%8A%A5%20%EA%B5%AC%ED%98%84/%EC%BB%A4%EC%8A%A4%ED%85%80%20%EB%A9%94%EB%89%B4/README.md)
 
 * []()
