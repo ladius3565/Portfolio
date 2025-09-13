@@ -16,7 +16,7 @@ namespace UI.Scroll
         [Space(4)]
         [SerializeField] protected float spacing;
         [Space(2)]
-        [Tooltip("¼ö·®ÀÌ ÀûÀ» ¶§ ½ºÅ©·Ñ °íÁ¤ÇÒÁö ¿©ºÎ")]
+        [Tooltip("ìˆ˜ëŸ‰ì´ ì ì„ ë•Œ ìŠ¤í¬ë¡¤ ê³ ì •í• ì§€ ì—¬ë¶€")]
         [SerializeField] protected bool isEnable;
         #endregion
 
@@ -191,7 +191,7 @@ namespace UI.Scroll
                 node = node.Next;
             }
         }
-        protected virtual void CalcScroll() //ÃÖ¼Ò Å©±â ±âÁØÀ¸·Î °è»ê
+        protected virtual void CalcScroll() //ìµœì†Œ í¬ê¸° ê¸°ì¤€ìœ¼ë¡œ ê³„ì‚°
         {
             var maxHeight = Mathf.Abs(Scroll.viewport.rect.height);
 
