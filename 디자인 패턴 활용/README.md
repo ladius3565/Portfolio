@@ -13,3 +13,7 @@
 또한 Model에서 입력 이벤트에 의해 정보 업데이트가 이루어져 UI에서 갱신이 되어야 할 때 전달해주는 방식은 옵저버 패턴을 활용하였습니다.
 
 옵저버 패턴을 사용함으로 여러 UI에서 동시에 정보 업데이트에 대한 호출을 받을 수 있게 되는데 
+
+![Observer 예시](https://github.com/ladius3565/Portfolio/blob/main/%EB%94%94%EC%9E%90%EC%9D%B8%20%ED%8C%A8%ED%84%B4%20%ED%99%9C%EC%9A%A9/Image/ObserverPattern_EX.png)
+
+이미지 처럼 스킬 리스트 스크롤UI 위에 스킬 정보UI가 있는 경우 두 UI 모두 변경된 정보에 대한 업데이트를 해줘야 하는데 옵저버 패턴을 통해 처리가 가능합니다.
