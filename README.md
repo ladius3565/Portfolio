@@ -3,8 +3,8 @@
 이전에 작업했던 코드들 중 일부를 가져와 주석을 추가한 코드들 입니다.
 
 
-### 디자인 패턴 활용(MVP, 옵저버)
-* [디자인 패턴 활용](https://github.com/ladius3565/Portfolio/blob/main/%EB%94%94%EC%9E%90%EC%9D%B8%20%ED%8C%A8%ED%84%B4%20%ED%99%9C%EC%9A%A9/README.md)
+### 디자인 패턴 활용
+* [UI 구조 (MVP, 옵저버 패턴)](https://github.com/ladius3565/Portfolio/blob/main/%EB%94%94%EC%9E%90%EC%9D%B8%20%ED%8C%A8%ED%84%B4%20%ED%99%9C%EC%9A%A9/README.md)
 
 
 ### 공통 기능 구현
