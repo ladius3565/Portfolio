@@ -10,20 +10,26 @@ namespace UI.Scroll
     public abstract class InfiniteVerticalScroll<T> : MonoBehaviour
     {        
         #region Inspector
+        //«ÿ¥Á Ω∫≈©∑—ø° ªÁøÎµ«¥¬ «¡∏Æ∆’
         [SerializeField] protected GameObject prefab;
         [Space(2)]
+        //Ω∫≈©∑—¿« ªÛ«œ¡¬øÏ ∂ÁøÔ ∞≈∏Æ
         [SerializeField] protected RectOffset padding;
         [Space(4)]
+        //∞¢ ΩΩ∑‘µÈ ≥¢∏Æ ∂ÁøÔ ∞≈∏Æ
         [SerializeField] protected float spacing;
         [Space(2)]
-        [Tooltip("ÏàòÎüâÏù¥ Ï†ÅÏùÑ Îïå Ïä§ÌÅ¨Î°§ Í≥†Ï†ïÌï†ÏßÄ Ïó¨Î∂Ä")]
+        [Tooltip("ºˆ∑Æ¿Ã ¿˚¿ª ∂ß Ω∫≈©∑— ∞Ì¡§«“¡ˆ ø©∫Œ")]
+        //Ω∫≈©∑—ø° « ø‰«— ΩΩ∑‘∫∏¥Ÿ ¿˚¿ª ∂ß Ω∫≈©∑— ∞Ì¡§«“¡ˆ ø©∫Œ
         [SerializeField] protected bool isEnable;
         #endregion
 
         public List<T> datas { get; protected set; }
         protected LinkedList<ScrollSlot<T>> slots = new();
 
+        //Ω∫≈©∑—UIø°º≠ ∫∏ø©¡ˆ¥¬ øµø™¿ª ∞ËªÍ«œ±‚ ¿ß«ÿ ªÁøÎ
         protected Rect visibleRect;
+        //Ω∫≈©∑—¿Ã øÚ¡˜¿Ã∞Ì ¿÷¥¬ πÊ«‚ ∞ËªÍ¿ª ¿ß«ÿ ∏∂¡ˆ∏∑ Ω∫≈©∑— ¿ßƒ°∏¶ ¿˙¿Â
         private float prevScrollY;
 
         private RectTransform rect;
@@ -46,11 +52,16 @@ namespace UI.Scroll
             }
         }
 
+        //∏µÁ ΩΩ∑‘¿« ≥Ù¿Ã∞° µø¿œ«“ ∂ß ∏Æ≈œ
         protected float slotHeight;
+        //Ω∫≈©∑—ø° « ø‰«— √÷º“ ∞≥ºˆ
         protected int minSlot;
+        //Ω∫≈©∑—ø° « ø‰«— √÷¥Î ∞≥ºˆ
         protected int maxSlot;
 
+        //Start «‘ºˆ∞° »£√‚ µ«æ˙¥¬¡ˆ √º≈©
         protected bool isInit;
+        //Start «‘ºˆ »£√‚ ¿Ã»ƒ(√ ±‚»≠ ¿€æ˜ ¿Ã»ƒ) »£√‚µ«æÓæﬂ «“ ¿Ã∫•∆Æ
         protected UnityAction StartAction;
 
         private void Start()
@@ -70,6 +81,7 @@ namespace UI.Scroll
             isInit = true;
             StartAction?.Invoke();
         }
+        //StartActionø° µÓ∑œ«œ¥¬ «‘ºˆ
         public void Action(UnityAction action)
         {
             if (isInit) action();
@@ -83,12 +95,14 @@ namespace UI.Scroll
                 StartAction += action;
         }
 
+        //µ•¿Ã≈Õ ¿‘∑¬ «‘ºˆ
         public void InitData(List<T> data)
         {            
             datas = data;
             CheckEnable();
             if (isInit) InitView();
         }
+        //µ•¿Ã≈Õ √ ±‚»≠ «‘ºˆ
         public void InitData()
         {
             if (datas is null) return;
@@ -96,6 +110,7 @@ namespace UI.Scroll
             CheckEnable();
             InitView();
         }
+        //µ•¿Ã≈Õ ¿‘∑¬«œ∏Èº≠ ªÛ¥‹¿∏∑Œ Ω∫≈©∑— ¿Ãµø
         public void InitTop(List<T> data)
         {
             datas = data;
@@ -106,6 +121,7 @@ namespace UI.Scroll
                 MoveScrollTop();
             }
         }
+        //µ•¿Ã≈Õ ¿‘∑¬«œ∏Èº≠ ∆Ø¡§ ¿ßƒ°∑Œ Ω∫≈©∑— ¿Ãµø
         public void InitIdx(List<T> data, int idx)
         {
             datas = data;
@@ -117,16 +133,24 @@ namespace UI.Scroll
             }
         }
 
+        //µ•¿Ã≈Õ √ﬂ∞°
         public virtual void AddData(T data)
         {
             datas.Add(data);
             InitView();
         }
+        //µ•¿Ã≈Õ ¡¶∞≈
         public virtual void RemoveData(T data)
         {
             datas.Remove(data);
             InitView();
+        }       
+        public virtual void RemoveData(int idx)
+        {
+            datas.RemoveAt(idx);
+            InitView();
         }
+        //∏µÁ ΩΩ∑‘ µ•¿Ã≈Õ æ˜µ•¿Ã∆Æ
         public void UpdateSlot()
         {
             foreach (var item in slots)
@@ -135,16 +159,19 @@ namespace UI.Scroll
             }
         }
 
+        //Ω∫≈©∑—¿ª √÷ªÛ¥‹¿∏∑Œ ¿Ãµø
         public void ScrollTop()
         {
             if (!isInit) return;
             MoveScrollTop();
         }
+        //Ω∫≈©∑—¿ª √÷«œ¥‹¿∏∑Œ ¿Ãµø
         public void ScrollBottom() 
         {
             if (!isInit) return;
             MoveScrollBottom(); 
         }
+        //Ω∫≈©∑—¿ª ∆Ø¡§ ¿ßƒ°∑Œ ¿Ãµø
         public void ScrollIndex(int index)
         {
             if (!isInit) return;
@@ -155,12 +182,14 @@ namespace UI.Scroll
             else MoveScrollIndex(index);
         }
 
+        //Ω∫≈©∑—¿« ∏µÁ ¡§∫∏∏¶ √ ±‚»≠
         protected void InitView()
         {
             UpdateContentSize();
             UpdateVisibleRect();
             UpdateView();
         }
+        //ΩΩ∑‘µÈ¿« ¿ßƒ°∏¶ ¿ÁπËƒ°
         protected void UpdateView()
         {            
             var node = slots.First;
@@ -191,21 +220,11 @@ namespace UI.Scroll
                 node = node.Next;
             }
         }
-        protected virtual void CalcScroll() //ÏµúÏÜå ÌÅ¨Í∏∞ Í∏∞Ï§ÄÏúºÎ°ú Í≥ÑÏÇ∞
-        {
-            var maxHeight = Mathf.Abs(Scroll.viewport.rect.height);
 
-            var maxCount = (int)(maxHeight / (OnHeight(0) + spacing));
-
-            var voidHeight = maxHeight - OnHeight(0) * maxCount - spacing * (maxCount - 1);
-
-            minSlot = maxCount;
-            var plus = voidHeight - spacing * 2 <= 0 ? 0 : 1;
-            maxSlot = minSlot + plus;
-        }
-
+        //ΩΩ∑‘¿« ≥Ù¿Ã ∏Æ≈œ
         protected virtual float OnHeight(int idx) { return slotHeight; }
 
+        //Ω∫≈©∑— Ω√ø° »£√‚µ«¥¬ «‘ºˆ
         protected virtual void OnScroll(Vector2 pos)
         {
             UpdateVisibleRect();
@@ -215,6 +234,7 @@ namespace UI.Scroll
             prevScrollY = visibleRect.y;
         }
 
+        //«ˆ¿Á µ•¿Ã≈Õ ªÁ¿Ã¡Óø° ∏¬∞‘ ContentªÁ¿Ã¡Ó ∫Ø∞Ê(Ω∫≈©∑— µ… π¸¿ß∏¶ ¿Áº≥¡§)
         protected void UpdateContentSize()
         {
             var height = 0f;
@@ -228,6 +248,7 @@ namespace UI.Scroll
             size.y = padding.top + height + padding.bottom;
             Scroll.content.sizeDelta = size;
         }
+        //VisibleRect¿« π¸¿ß √ ±‚»≠
         protected void UpdateVisibleRect()
         {
             visibleRect.x = Scroll.content.anchoredPosition.x;
@@ -237,6 +258,7 @@ namespace UI.Scroll
             visibleRect.height = Scroll.viewport.rect.height;
         }
 
+        //Ω∫≈©∑— µ«¥¬ πÊ«‚ø° ∏¬√Á ΩΩ∑‘µÈ ¿ßƒ°∏¶ ¿Ãµø
         private void ScrollSlot(bool up)
         {
             if (slots.Count == 0) return;
@@ -273,6 +295,7 @@ namespace UI.Scroll
             }
         }
 
+        //ΩΩ∑‘¿ª « ø‰«— µ•¿Ã≈Õ∑Œ æ˜µ•¿Ã∆Æ
         protected virtual void UpdateSlotIdx(ScrollSlot<T> slot, int idx)
         {
             slot.idx = idx;
@@ -284,6 +307,7 @@ namespace UI.Scroll
             }
             else slot.gameObject.SetActive(false);
         }
+        //∞°¿Â ±‚∫ª¿Ã µ«¥¬ «¡∏Æ∆’¿∏∑Œ ΩΩ∑‘ ª˝º∫
         protected virtual ScrollSlot<T> CreateSlot(int idx)
         {
             var obj = Instantiate(prefab, Scroll.content);
@@ -295,6 +319,20 @@ namespace UI.Scroll
 
             return null;
         }
+        //ΩΩ∑‘¿« ≈©±‚∏¶ ¿ÃøÎ«ÿ «ÿ¥Á ΩΩ∑‘ø° « ø‰«— √÷º“, √÷¥Î ≈©±‚ ∞ËªÍ
+        protected virtual void CalcScroll() //√÷º“ ≈©±‚ ±‚¡ÿ¿∏∑Œ ∞ËªÍ
+        {
+            var maxHeight = Mathf.Abs(Scroll.viewport.rect.height);
+
+            var maxCount = (int)(maxHeight / (OnHeight(0) + spacing));
+
+            var voidHeight = maxHeight - OnHeight(0) * maxCount - spacing * (maxCount - 1);
+
+            minSlot = maxCount;
+            var plus = voidHeight - spacing * 2 <= 0 ? 0 : 1;
+            maxSlot = minSlot + plus;
+        }
+        //√÷¥Î ΩΩ∑‘ ºˆ∑Æø° ∏¬∞‘ ΩΩ∑‘ ª˝º∫
         protected virtual void BatchSlot()
         {
             var top = new Vector2(padding.left, -padding.top);
@@ -306,12 +344,14 @@ namespace UI.Scroll
                 slots.AddLast(slot);
             }
         }
+        //µ•¿Ã≈Õ∞° √÷º“ ºˆ∑Æ∫∏¥Ÿ ¿€¥Ÿ∏È Ω∫≈©∑— ∞Ì¡§«“¡ˆ ∞ËªÍ
         private void CheckEnable()
         {
             if (isEnable)
                 Scroll.enabled = datas.Count > minSlot;
         }
 
+        //Ω∫≈©∑—¿ª √÷ªÛ¥‹¿∏∑Œ ¿Ãµø
         private void MoveScrollTop()
         {
             Scroll.content.anchoredPosition = Vector2.zero;
@@ -326,6 +366,7 @@ namespace UI.Scroll
                 top = item.Bottom + new Vector2(0, -spacing);
             }
         }
+        //Ω∫≈©∑—¿ª √÷«œ¥‹¿∏∑Œ ¿Ãµø
         private void MoveScrollBottom()
         {
             Scroll.content.anchoredPosition = new Vector2(0, Scroll.content.rect.height - Scroll.viewport.rect.height);
@@ -341,6 +382,7 @@ namespace UI.Scroll
                 bottom = item.Top + new Vector2(0f, spacing);
             }
         }
+        //Ω∫≈©∑—¿ª ø¯«œ¥¬ ¿ßƒ°∑Œ ¿Ãµø
         private void MoveScrollIndex(int index)
         {
             var height = (float)padding.top;
