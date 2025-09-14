@@ -6,7 +6,9 @@
 
 유니티의 ScrollRect 컴포넌트와 함께 사용하도록 제작되었습니다.
 
-<align="center" img src="https://github.com/ladius3565/Portfolio/blob/main/%EA%B3%B5%ED%86%B5%20%EA%B8%B0%EB%8A%A5%20%EA%B5%AC%ED%98%84/%EB%AC%B4%ED%95%9C%20%EC%8A%A4%ED%81%AC%EB%A1%A4/Image/ScrollUML.png"/>
+<p align="center">
+  <img src="https://github.com/ladius3565/Portfolio/blob/main/%EA%B3%B5%ED%86%B5%20%EA%B8%B0%EB%8A%A5%20%EA%B5%AC%ED%98%84/%EB%AC%B4%ED%95%9C%20%EC%8A%A4%ED%81%AC%EB%A1%A4/Image/ScrollUML.png">
+</p>
 
 스크롤에 사용되는 데이터의 경우에는 데이터 변경이 자유롭게 가능하도록 List를 사용하였으며 슬롯의 경우에는 특정 위치의 슬롯에만 접근하기 보다는 순차적으로 처리하기 때문에 LinkedList를 사용하였습니다.
 
