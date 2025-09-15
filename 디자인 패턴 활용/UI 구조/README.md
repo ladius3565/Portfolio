@@ -1,13 +1,13 @@
 # 개요
 [돌아가기](https://github.com/ladius3565/Portfolio/blob/main/README.md)
 
-
-
 UI 콘텐츠 개발할 때 사용하던 구조에 대한 코드입니다.
 
 주로 MVP 패턴과 옵저버 패턴을 활용하였습니다.
 
-![UML 이미지](https://github.com/ladius3565/Portfolio/blob/main/%EB%94%94%EC%9E%90%EC%9D%B8%20%ED%8C%A8%ED%84%B4%20%ED%99%9C%EC%9A%A9/UI%20%EA%B5%AC%EC%A1%B0/Image/DesignPattern_UML.png)
+<p align="center">
+  <img src="https://github.com/ladius3565/Portfolio/blob/main/%EB%94%94%EC%9E%90%EC%9D%B8%20%ED%8C%A8%ED%84%B4%20%ED%99%9C%EC%9A%A9/UI%20%EA%B5%AC%EC%A1%B0/Image/DesignPattern_UML.png">
+</p>
 
 위 UML 이미지 처럼 구조를 잡아 사용하였습니다.
 
@@ -15,12 +15,16 @@ UI 콘텐츠 개발할 때 사용하던 구조에 대한 코드입니다.
 
 옵저버 패턴을 사용함으로 여러 UI에서 동시에 정보 업데이트에 대한 호출을 받을 수 있게 되는데 
 
-![Observer 예시](https://github.com/ladius3565/Portfolio/blob/main/%EB%94%94%EC%9E%90%EC%9D%B8%20%ED%8C%A8%ED%84%B4%20%ED%99%9C%EC%9A%A9/UI%20%EA%B5%AC%EC%A1%B0/Image/ObserverPattern_EX.png)
+<p align="center">
+  <img src="https://github.com/ladius3565/Portfolio/blob/main/%EB%94%94%EC%9E%90%EC%9D%B8%20%ED%8C%A8%ED%84%B4%20%ED%99%9C%EC%9A%A9/UI%20%EA%B5%AC%EC%A1%B0/Image/ObserverPattern_EX.png">
+</p>
 
 이미지 처럼 스킬 리스트UI 위에 스킬 정보UI가 있는 경우 두 UI 모두 변경된 정보에 대한 업데이트가 필요하게 되는데 옵저버 패턴을 통해 UI가 열릴 때 Model에 구독하고 닫힐 때는 취소하는 구조로 만들어 열려있는 UI만 업데이트 되도록 처리합니다.
 
 
-![MVP 예시](https://github.com/ladius3565/Portfolio/blob/main/%EB%94%94%EC%9E%90%EC%9D%B8%20%ED%8C%A8%ED%84%B4%20%ED%99%9C%EC%9A%A9/UI%20%EA%B5%AC%EC%A1%B0/Image/MVPPattern_EX.png)
+<p align="center">
+  <img src="https://github.com/ladius3565/Portfolio/blob/main/%EB%94%94%EC%9E%90%EC%9D%B8%20%ED%8C%A8%ED%84%B4%20%ED%99%9C%EC%9A%A9/UI%20%EA%B5%AC%EC%A1%B0/Image/MVPPattern_EX.png">
+</p>
 
 최종적으로 위의 이미지와 같은 구조로 개별 UI가 구현되게 됩니다.
 View에서는 UI의 이미지, 텍스트, 이펙트 와 같은 정보만을 보유하며 Presenter에서 정보를 전달받아 UI 정보를 업데이트 합니다.
