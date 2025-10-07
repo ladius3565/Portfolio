@@ -7,15 +7,13 @@ public class WaitNode : LeafNode
 
     public override eNodeState Excute()
     {
-        time += Time.deltaTime;
-        //Debug.Log(time);
+        time += Time.deltaTime;        
         if (time < waitTime) return eNodeState.Running;        
         return eNodeState.Success;
     }
     public override void Reset()
     {
-        time = 0;
-        Debug.Log("Reset");
+        time = 0;        
     }
 
     public WaitNode(float wait)
@@ -72,4 +70,5 @@ public class RandomNode : CompositeNode
     {
         weight = 100;
     }
+
 }
