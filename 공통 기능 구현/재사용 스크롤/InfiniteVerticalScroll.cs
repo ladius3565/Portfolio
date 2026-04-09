@@ -21,10 +21,10 @@ namespace UI.Scroll
         [Space(2)]
         [Tooltip("수량이 적을 때 스크롤 고정할지 여부")]
         //스크롤에 필요한 슬롯보다 적을 때 스크롤 고정할지 여부
-        [SerializeField] protected bool isEnable;
+        [SerializeField] protected bool isClamped;
         #endregion
 
-        public List<T> datas { get; protected set; }
+        public List<T> items { get; protected set; }
         protected LinkedList<ScrollSlot<T>> slots = new();
 
         //스크롤UI에서 보여지는 영역을 계산하기 위해 사용
@@ -59,7 +59,7 @@ namespace UI.Scroll
         //스크롤에 필요한 최대 개수
         protected int maxSlot;
 
-        //Start 함수가 호출 되었는지 체크
+        //Start 함수가 호출 되었는지 체크 (스크롤을 참조하여 사용하는 클래스가 먼저 초기화 될 경우 대비)
         protected bool isInit;
         //Start 함수 호출 이후(초기화 작업 이후) 호출되어야 할 이벤트
         protected UnityAction StartAction;
@@ -74,46 +74,60 @@ namespace UI.Scroll
             }            
             CalcScroll();
             BatchSlot();
-            if (datas is null)
-                datas = new();
+            if (items is null)
+            {
+                items = new();
+            }
             InitView();
             CheckEnable();
             isInit = true;
             StartAction?.Invoke();
+            StartAction = null;
         }
+
         //StartAction에 등록하는 함수
         public void Action(UnityAction action)
         {
-            if (isInit) action();
+            if (isInit)
+            {
+                action();
+            }
             else
+            {
                 StartAction = action;
+            }
         }
         public void AddAction(UnityAction action)
         {
-            if (isInit) action();
+            if (isInit)
+            {
+                action();
+            }
             else
-                StartAction += action;
+            {
+                StartAction = action;
+            }
         }
 
         //데이터 입력 함수
         public void InitData(List<T> data)
         {            
-            datas = data;
+            items = data;
             CheckEnable();
             if (isInit) InitView();
         }
         //데이터 초기화 함수
         public void InitData()
         {
-            if (datas is null) return;
-            datas.Clear();
+            if (items is null) return;
+            items.Clear();
             CheckEnable();
             InitView();
         }
         //데이터 입력하면서 상단으로 스크롤 이동
         public void InitTop(List<T> data)
         {
-            datas = data;
+            items = data;
             CheckEnable();
             if (isInit)
             {
@@ -124,32 +138,33 @@ namespace UI.Scroll
         //데이터 입력하면서 특정 위치로 스크롤 이동
         public void InitIdx(List<T> data, int idx)
         {
-            datas = data;
+            items = data;
             CheckEnable();
             if (isInit)
             {
                 UpdateContentSize();
-                ScrollIndex(idx);
+                ScrollToIndex(idx);
             }
         }
 
         //데이터 추가
         public virtual void AddData(T data)
         {
-            datas.Add(data);
+            items.Add(data);
             InitView();
         }
         //데이터 제거
         public virtual void RemoveData(T data)
         {
-            datas.Remove(data);
+            items.Remove(data);
             InitView();
         }       
         public virtual void RemoveData(int idx)
         {
-            datas.RemoveAt(idx);
+            items.RemoveAt(idx);
             InitView();
         }
+
         //모든 슬롯 데이터 업데이트
         public void UpdateSlot()
         {
@@ -160,26 +175,32 @@ namespace UI.Scroll
         }
 
         //스크롤을 최상단으로 이동
-        public void ScrollTop()
+        public void ScrollToTop()
         {
             if (!isInit) return;
             MoveScrollTop();
         }
         //스크롤을 최하단으로 이동
-        public void ScrollBottom() 
+        public void ScrollToBottom() 
         {
             if (!isInit) return;
             MoveScrollBottom(); 
         }
         //스크롤을 특정 위치로 이동
-        public void ScrollIndex(int index)
+        public void ScrollToIndex(int index)
         {
             if (!isInit) return;
-            if (index <= 0 || datas.Count <= minSlot)
+            if (index <= 0 || items.Count <= minSlot)
                 MoveScrollTop();
-            else if (index >= datas.Count - minSlot) 
+            else if (index >= items.Count - minSlot) 
                 MoveScrollBottom();
             else MoveScrollIndex(index);
+        }
+        public void ScrollToData(T data)
+        {
+            if (!isInit) return;
+            var idx = items.IndexOf(data);
+            ScrollToIndex(idx);
         }
 
         //스크롤의 모든 정보를 초기화
@@ -194,9 +215,9 @@ namespace UI.Scroll
         {            
             var node = slots.First;
             if (node.Value.idx < 0) node.Value.idx = 0;
-            else if (node.Value.idx >= datas.Count)
+            else if (node.Value.idx >= items.Count)
             {
-                var idx = datas.Count - maxSlot - 1;
+                var idx = items.Count - maxSlot - 1;
                 if (idx < 0) idx = 0;
                 node.Value.idx = idx;
             }
@@ -205,7 +226,7 @@ namespace UI.Scroll
             var height = (float)padding.top;
             for (var i = 0; i < node.Value.idx; i++)
             {
-                height += OnHeight(i) + spacing;
+                height += GetHeight(i) + spacing;
             }
             var top = new Vector2(padding.left, -height);
             node.Value.Top = top;
@@ -222,7 +243,10 @@ namespace UI.Scroll
         }
 
         //슬롯의 높이 리턴
-        protected virtual float OnHeight(int idx) { return slotHeight; }
+        protected virtual float GetHeight(int idx)
+        { 
+            return slotHeight; 
+        }
 
         //스크롤 시에 호출되는 함수
         protected virtual void OnScroll(Vector2 pos)
@@ -238,10 +262,13 @@ namespace UI.Scroll
         protected void UpdateContentSize()
         {
             var height = 0f;
-            for (var i = 0; i < datas.Count; i++)
+            for (var i = 0; i < items.Count; i++)
             {
-                height += OnHeight(i);
-                if (i > 0) height += spacing;
+                height += GetHeight(i);
+                if (i > 0)
+                {
+                    height += spacing;
+                }
             }
 
             var size = Scroll.content.sizeDelta;
@@ -299,11 +326,11 @@ namespace UI.Scroll
         protected virtual void UpdateSlotIdx(ScrollSlot<T> slot, int idx)
         {
             slot.idx = idx;
-            if (slot.idx >= 0 && slot.idx <= datas.Count - 1)
+            if (slot.idx >= 0 && slot.idx <= items.Count - 1)
             {
                 slot.gameObject.SetActive(true);
-                slot.Initialize(datas[idx]);
-                slot.Height = OnHeight(idx);
+                slot.Initialize(items[idx]);
+                slot.Height = GetHeight(idx);
             }
             else slot.gameObject.SetActive(false);
         }
@@ -324,11 +351,11 @@ namespace UI.Scroll
         {
             var maxHeight = Mathf.Abs(Scroll.viewport.rect.height);
 
-            var maxCount = (int)(maxHeight / (OnHeight(0) + spacing));
+            var maxCount = (int)(maxHeight / (GetHeight(0) + spacing));
 
-            var voidHeight = maxHeight - OnHeight(0) * maxCount - spacing * (maxCount - 1);
+            var voidHeight = maxHeight - GetHeight(0) * maxCount - spacing * (maxCount - 1);
 
-            minSlot = maxCount;
+            minSlot = maxCount;            
             var plus = voidHeight - spacing * 2 <= 0 ? 0 : 1;
             maxSlot = minSlot + plus;
         }
@@ -347,8 +374,8 @@ namespace UI.Scroll
         //데이터가 최소 수량보다 작다면 스크롤 고정할지 계산
         private void CheckEnable()
         {
-            if (isEnable)
-                Scroll.enabled = datas.Count > minSlot;
+            if (isClamped)
+                Scroll.enabled = items.Count > minSlot;
         }
 
         //스크롤을 최상단으로 이동
@@ -372,7 +399,7 @@ namespace UI.Scroll
             Scroll.content.anchoredPosition = new Vector2(0, Scroll.content.rect.height - Scroll.viewport.rect.height);
             Scroll.StopMovement();
             UpdateVisibleRect();
-            var idx = datas.Count - 1;
+            var idx = items.Count - 1;
             var bottom = new Vector2(padding.left, padding.bottom - Scroll.content.rect.height);
             foreach (var item in slots.Reverse())
             {
@@ -388,14 +415,14 @@ namespace UI.Scroll
             var height = (float)padding.top;
             for (var i = 0; i < index; i++)
             {
-                height += OnHeight(i) + spacing;
+                height += GetHeight(i) + spacing;
             }
             Scroll.content.anchoredPosition = new Vector2(0, height);
             Scroll.StopMovement();
             UpdateVisibleRect();
             index -= 1;
             var node = slots.First;
-            height -= OnHeight(index) + spacing;
+            height -= GetHeight(index) + spacing;
             var top = new Vector2(padding.left, -height);
             if (index >= 0)
             {
@@ -417,7 +444,7 @@ namespace UI.Scroll
         {
             gameObject.SetActive(value);
         }
-        public bool active
+        public bool IsActive
         {
             get { return gameObject.activeSelf; }
         }
